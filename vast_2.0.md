@@ -9,26 +9,19 @@ This document has been developed by the IAB Digital Video Committee.
 Document Version 2.0
 Author Ari Paparo - Google
 Date 11/11/2009
-Summary of Changes - New root node "VAST"
-from Previous Version - Version number for root node and AdSystem
-- Refactoring of resourceTypes for Companion, NonLinear
-and Wrapper
+
+Summary of Changes - New root node "VAST" from Previous Version - Version number for root node and AdSystem
+- Refactoring of resourceTypes for Companion, NonLinear and Wrapper
 - Support for interactive MediaFiles
 - Move apiFramework from element to attribute
-- Alignment of tracking event names with IAB video
-reporting standards
+- Alignment of tracking event names with IAB video reporting standards
 - Clarification of documentation
-- Introduction of Creative element to delineate multi-part
-creatives within a single Ad
+- Introduction of Creative element to delineate multi-part creatives within a single Ad
 - Tracking of creative elements and companions
 - Change VASTAdTagURL to VASTAdTagURI
 
-About the IAB Digital Video Committee:
-The Digital Video Committee of the IAB is comprised of over 145 member companies actively engaged in the creation and
-execution of digital video advertising. One of the goals of the committee is to implement a comprehensive set of guidelines,
-measurement, and creative options for interactive video advertising. The committee works to educate marketers and
-agencies on the strength of digital video as a marketing vehicle. A full list of Committee member companies can be found
-at: http://www.iab.net/member_center/35088?iabid=a0330000000s0p4AAA
+<b>About the IAB Digital Video Committee:</b>
+The Digital Video Committee of the IAB is comprised of over 145 member companies actively engaged in the creation and execution of digital video advertising. One of the goals of the committee is to implement a comprehensive set of guidelines, measurement, and creative options for interactive video advertising. The committee works to educate marketers and agencies on the strength of digital video as a marketing vehicle. A full list of Committee member companies can be found at: http://www.iab.net/member_center/35088?iabid=a0330000000s0p4AAA
 
 This document can be found on the IAB website at: http://www.iab.net/vast
 
@@ -38,89 +31,48 @@ Vice President of Industry Services, IAB
 212-380-4724
 jeremy@iab.net
 
-
 ## Summary and Scope
-The scope of this project is to develop and publish a standard XML-based ad response for in-stream video as well as an
-XML Schema Definition ("XSD") for developers. This Video Ad Serving Template ("VAST") is meant to accommodate the
-majority of current practices within the online advertising business.
+The scope of this project is to develop and publish a standard XML-based ad response for in-stream video as well as an XML Schema Definition ("XSD") for developers. This Video Ad Serving Template ("VAST") is meant to accommodate the majority of current practices within the online advertising business.
 
-This document is designed for any on-demand video player where the ad response is parsed prior to play. For example,
-use of this standard would be appropriate within an Adobe Flash player if the ad response was requested and parsed in
-ActionScript but would not be appropriate if contained directly within a SMIL playlist directly sent to the player. It may be
-possible to use this XML format for applications other than on-demand viewing such as live video streaming, downloadable
-video players, set-top boxes, etc, but those applications are explicitly beyond the scope of the current effort.
+This document is designed for any on-demand video player where the ad response is parsed prior to play. For example, use of this standard would be appropriate within an Adobe Flash player if the ad response was requested and parsed in ActionScript but would not be appropriate if contained directly within a SMIL playlist directly sent to the player. It may be possible to use this XML format for applications other than on-demand viewing such as live video streaming, downloadable video players, set-top boxes, etc, but those applications are explicitly beyond the scope of the current effort.
 
-The goal of this specification is to be compatible with any video player framework that is scriptable. It will be up to each
-Secondary Ad Server to develop its own implementation of the standard and it will be up to each publisher or vendor to
-implement the standard in their Primary Ad Server and their Video Players.
+The goal of this specification is to be compatible with any video player framework that is scriptable. It will be up to each Secondary Ad Server to develop its own implementation of the standard and it will be up to each publisher or vendor to implement the standard in their Primary Ad Server and their Video Players.
 
-It is assumed in this document that Video Players will attempt to align impression tracking with the IAB Digital Video
-Impression Guidelines.
+It is assumed in this document that Video Players will attempt to align impression tracking with the IAB Digital Video Impression Guidelines.
 
-This document is intended to support both Linear Video Ads (such as "pre-rolls"), Non-linear Video Ads (such as "overlays")
-and Companion ads as defined in the IAB Digital Video Ad Format Guidelines. Many Non-linear ads include complex
-interaction with the underlying Video Player, and thus the VAST standard may not be entirely sufficient for implementing
-such ads across ad servers at this time. It is also important to note that VAST does not specify the positioning or timing of
-the ads within a video player; it is left to the video player's itself to determine this since the player is the entity with the
-understanding of the context in which the ads will appear.
+This document is intended to support both Linear Video Ads (such as "pre-rolls"), Non-linear Video Ads (such as "overlays") and Companion ads as defined in the IAB Digital Video Ad Format Guidelines. Many Non-linear ads include complex interaction with the underlying Video Player, and thus the VAST standard may not be entirely sufficient for implementing such ads across ad servers at this time. It is also important to note that VAST does not specify the positioning or timing of the ads within a video player; it is left to the video player's itself to determine this since the player is the entity with the understanding of the context in which the ads will appear.
 
-Note: The current version of VAST is 2.0. VAST 1.0 is deprecated and it is recommended that all
-participants in the industry upgrade their implementations as soon as feasible.
-
+Note: The current version of VAST is 2.0. VAST 1.0 is deprecated and it is recommended that all participants in the industry upgrade their implementations as soon as feasible.
 
 ## Definitions
-Companion Ad: Commonly text, display ads, rich media, or skins that wrap around the video
-experience. These ads come in a number of sizes and shapes and typically run alongside or
-surrounding the video player.
+Companion Ad: Commonly text, display ads, rich media, or skins that wrap around the video experience. These ads come in a number of sizes and shapes and typically run alongside or surrounding the video player.
 
 InLine Ad: VAST document that includes all the elements necessary to display the visual experience of the ad.
 
-Linear Video Ad: The ad is presented before, in the middle of, or after the video content is
-consumed by the user, in very much the same way a TV commercial can play before, during or
-after the chosen program.
+Linear Video Ad: The ad is presented before, in the middle of, or after the video content is consumed by the user, in very much the same way a TV commercial can play before, during or after the chosen program.
 
-Non-linear Video Ad: The ad runs concurrently with the video content so the users see the ad while viewing the
-content. Non-linear video ads can be delivered as text, graphical ads, or as video overlays.
+Non-linear Video Ad: The ad runs concurrently with the video content so the users see the ad while viewing the content. Non-linear video ads can be delivered as text, graphical ads, or as video overlays.
 
-Primary Ad Server: First ad serving system called by the Video Player or other framework. It is assumed that in most
-cases a publisher will make all initial ad requests through their Primary Ad Server (whether homegrown or third party), then
-redirect to other ad severs as needed.
+Primary Ad Server: First ad serving system called by the Video Player or other framework. It is assumed that in most cases a publisher will make all initial ad requests through their Primary Ad Server (whether homegrown or third party), then redirect to other ad severs as needed.
 
-Secondary Ad Server: Ad server used by an ad network or by the buyer of ads to serve creative, track results and
-optimize creatives.
+Secondary Ad Server: Ad server used by an ad network or by the buyer of ads to serve creative, track results and optimize creatives.
 
-VAST (Video Ad Serving Template): XML document format describing an ad to be displayed in, over, or around a
-Video Player or a Wrapper pointing to a downstream VAST document to be requested.
+VAST (Video Ad Serving Template): XML document format describing an ad to be displayed in, over, or around a Video Player or a Wrapper pointing to a downstream VAST document to be requested.
 
-Video Player: Environment in which in-stream video content is played. The Video Player may be built by the publisher or
-provided by a vendor.
+Video Player: Environment in which in-stream video content is played. The Video Player may be built by the publisher or provided by a vendor.
 
 Wrapper Ad: VAST document that points to another VAST document from a different server.
 
 
 ## Additional Recommendations
-In addition to the XML ad response standard detailed below, two optional recommendations have been identified to assist
-in the successful delivery of video ads:
+In addition to the XML ad response standard detailed below, two optional recommendations have been identified to assist in the successful delivery of video ads:
 
-1. A set of key-value pairs that can be added to the ad tag request in order to reduce errors resulting from incorrect
-ad responses. For example, if a publisher only wishes to receive Windows Media-formatted video ads or wants to
-receive ads of a certain duration, an ad serving vendor may wish to define the ad tag in such a way as to only
-provide ads with those specifications. Because the syntax of ad tags differs significantly between ad servers, this is
-an optional, recommended aspect of the project and not a formal requirement. This recommendation is included
-in this document as Appendix A.
+1. A set of key-value pairs that can be added to the ad tag request in order to reduce errors resulting from incorrect ad responses. For example, if a publisher only wishes to receive Windows Media-formatted video ads or wants to receive ads of a certain duration, an ad serving vendor may wish to define the ad tag in such a way as to only provide ads with those specifications. Because the syntax of ad tags differs significantly between ad servers, this is an optional, recommended aspect of the project and not a formal requirement. This recommendation is included in this document as Appendix A.
 
-2. A method of communication between the ad itself and the Video player in which it is displayed. This
-communication is important because both Linear and Non-Linear video ads can be interactive, and such user
-interaction will generally affect the activity of the Video player. For example, when a user clicks on an overlay ad
-the user may be presented with more information about the advertiser, while the video content is expected to
-pause. Currently, each publisher and technology vendor has implemented this type of communication in a non-standardized way, resulting in additional work for all parties when bringing campaigns live. This
-recommendation, called VPAID, was published by the IAB in a separate document available at
-http://www.iab.net/vpaid.
+2. A method of communication between the ad itself and the Video player in which it is displayed. This communication is important because both Linear and Non-Linear video ads can be interactive, and such user interaction will generally affect the activity of the Video player. For example, when a user clicks on an overlay ad the user may be presented with more information about the advertiser, while the video content is expected to pause. Currently, each publisher and technology vendor has implemented this type of communication in a non-standardized way, resulting in additional work for all parties when bringing campaigns live. This recommendation, called VPAID, was published by the IAB in a separate document available at http://www.iab.net/vpaid.
 
 ## Rationale
-The development of a standard method for in-stream ad serving is a necessary precursor to the acceptance of third party
-serving by publishers. The lack of third party ad serving within Video Players currently is causing two types of inefficiency:
-Publishers are not able to readily use ad networks to sell unsold video ad inventory, and buyers are not able to use their
+The development of a standard method for in-stream ad serving is a necessary precursor to the acceptance of third party serving by publishers. The lack of third party ad serving within Video Players currently is causing two types of inefficiency: Publishers are not able to readily use ad networks to sell unsold video ad inventory, and buyers are not able to use their
 current reporting and optimization tools for in-stream ads.
 
 The adoption of the VAST standard is expected to bring immediate benefits to all parties in the video ecosystem:
