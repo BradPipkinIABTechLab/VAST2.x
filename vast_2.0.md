@@ -169,9 +169,7 @@ Some clarification and description about the XML response:
 
 XML summary for VAST ad server response:
 
-<!-- Human Readable tabe here -->
-
-<!-- End human readable table -->
+![Figure/context from original PDF page 7](assets/vast_xml_schema_table_seamless.png)
 
 ## Click Tracking
 The video asset only allows a single primary click through URI with optional additional custom click-throughs. As such, each Secondary Ad Server can provide its own URI for click tracking and these URIs can be requested by the player as any other tracking URI.
